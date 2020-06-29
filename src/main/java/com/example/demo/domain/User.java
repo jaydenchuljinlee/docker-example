@@ -16,15 +16,19 @@ public class User {
     @Column(name = "user_no")
     private Long userNo;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "age")
-    private Integer age;
+    private int age;
 
     @Builder
-    public User(String name, Integer age) {
+    public User(String name, int age, String email) {
         this.name = name;
         this.age = age;
+        this.email = email;
     }
 }
