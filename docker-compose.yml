@@ -1,17 +1,11 @@
-version:"3"
-service:
-	test_database:
-		image: mysql:5.7
-		enviroment:
-			MYSQL_DATABASE: test_db
-			MYSQL_ROOT_PASSWORD: root
-			MYSQL_ROOT_HOST:'%'
-		ports:
-			- 3306:3306
+version: "3"
 
+services:
 	test_application:
-		build: .
+		images: openjdk:8u212-jdk
+		container_name: "test_application"
+		command: "java -jar /usr/src/myapp/SpringBootSample-0.0.1.jar"
+		volumes:
+			- /inteliJ/testapp/build/libs:/usr/src/myapp
 		ports:
 			- 8080:8080
-		depends_on:
-			- test_database
