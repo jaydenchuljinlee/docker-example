@@ -1,11 +1,26 @@
 version: "3"
 
 services:
-	test_application:
-		images: openjdk:8u212-jdk
-		container_name: "test_application"
-		command: "java -jar /usr/src/myapp/SpringBootSample-0.0.1.jar"
-		volumes:
-			- /inteliJ/testapp/build/libs:/usr/src/myapp
-		ports:
-			- 8080:8080
+    test_database:
+        container_name: mysql
+        image: mysql:latest
+        environment:
+            MYSQL_DATABASE: testdb
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3307:3307
+
+    test_application:
+        container_name: "test_application"
+        build: .
+        environment:
+            MYSQL_ADDRESS: test_database
+            MYSQL_USERNAME: root
+            MYSQL_PASSWORD: root
+        ports:
+            - 8080:8080
+        links:
+          - test_database
+        depends_on:
+          - test_database
